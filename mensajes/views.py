@@ -1,3 +1,9 @@
-from django.shortcuts import render
+from django.views.generic import ListView
 
-# Create your views here.
+from .models import Mensaje
+
+
+class VistaInicio(ListView):
+    model = Mensaje
+    template_name = "inicio.html"
+    context_object_name = "mensajes"
