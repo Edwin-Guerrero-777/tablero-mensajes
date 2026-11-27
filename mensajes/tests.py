@@ -1,3 +1,5 @@
+from datetime import datetime, timezone
+
 from django.test import TestCase
 from django.urls import reverse
 
@@ -28,6 +30,14 @@ class PruebasMensaje(TestCase):
     def test_contador_de_mensajes(self):
         respuesta = self.client.get(reverse("inicio"))
         self.assertContains(respuesta, "Total de mensajes: 1")
+
+    def test_fecha_con_formato(self):
+        # 23:55 UTC es 17:55 en la Ciudad de México (UTC-6).
+        Mensaje.objects.filter(pk=self.mensaje.pk).update(
+            fecha=datetime(2026, 10, 10, 23, 55, tzinfo=timezone.utc)
+        )
+        respuesta = self.client.get(reverse("inicio"))
+        self.assertContains(respuesta, "10 de Octubre, 17:55")
 
 
 class PruebasTableroVacio(TestCase):

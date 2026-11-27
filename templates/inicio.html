@@ -9,7 +9,11 @@
   <p>Total de mensajes: {{ mensajes|length }}</p>
   <ul>
     {% for mensaje in mensajes %}
-      <li>{{ mensaje.texto }}</li>
+      <li>
+        {{ mensaje.texto }}
+        <br>
+        <small>{{ mensaje.fecha|date:"j \d\e F, H:i" }}</small>
+      </li>
     {% empty %}
       <li>Todavía no hay mensajes.</li>
     {% endfor %}
