@@ -9,13 +9,18 @@ from .models import Mensaje
 class PruebasMensaje(TestCase):
     @classmethod
     def setUpTestData(cls):
-        cls.mensaje = Mensaje.objects.create(texto="Esta es una prueba.")
+        cls.mensaje = Mensaje.objects.create(texto="Esta es una prueba.", autor="Edwin")
 
     def test_contenido_modelo(self):
         self.assertEqual(self.mensaje.texto, "Esta es una prueba.")
+        self.assertEqual(self.mensaje.autor, "Edwin")
 
     def test_str_modelo(self):
         self.assertEqual(str(self.mensaje), "Esta es una prueba.")
+
+    def test_autor_por_defecto(self):
+        anonimo = Mensaje.objects.create(texto="Sin autor")
+        self.assertEqual(anonimo.autor, "Anónimo")
 
     def test_url_existe_en_ubicacion_correcta(self):
         respuesta = self.client.get("/")
@@ -26,6 +31,7 @@ class PruebasMensaje(TestCase):
         self.assertEqual(respuesta.status_code, 200)
         self.assertTemplateUsed(respuesta, "inicio.html")
         self.assertContains(respuesta, "Esta es una prueba.")
+        self.assertContains(respuesta, "Edwin")
 
     def test_contador_de_mensajes(self):
         respuesta = self.client.get(reverse("inicio"))

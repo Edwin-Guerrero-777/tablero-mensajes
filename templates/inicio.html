@@ -12,7 +12,7 @@
       <li>
         {{ mensaje.texto }}
         <br>
-        <small>{{ mensaje.fecha|date:"j \d\e F, H:i" }}</small>
+        <small>Por {{ mensaje.autor }}, el {{ mensaje.fecha|date:"j \d\e F, H:i" }}</small>
       </li>
     {% empty %}
       <li>Todavía no hay mensajes.</li>
